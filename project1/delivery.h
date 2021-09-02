@@ -147,4 +147,10 @@ bool operator==(const Delivery & lhs, const  Delivery & rhs);
 //friend
 bool operator!=(const Delivery & lhs, const Delivery & rhs);
 
+// operator<< (ostream, Delivery)
+// Prints string representation of data using toString
+// Function defined in source
+std::ostream & operator<<(std::ostream & str,
+			const Delivery & obj);
+
 #endif //#ifndef FILE_DELIVERY_H_INCLUDED

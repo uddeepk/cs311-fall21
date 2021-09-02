@@ -127,3 +127,12 @@ bool operator!=(const Delivery & lhs, const Delivery & rhs)
     return !(lhs == rhs);
 }
 
+// ostream& operator<<
+std::ostream & operator<<(std::ostream & str,
+			  const Delivery & obj)
+{
+      assert( obj.getQuantity() >= 0 && 1 >= obj.getMonth() && obj.getMonth() <= 12);
+      
+    str << obj.toString();
+    return str;
+}
