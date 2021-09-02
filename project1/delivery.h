@@ -28,18 +28,6 @@ class Delivery {
     // Prints string representation of data
     friend
 	std::ostream & operator<<(std::ostream & str, const Delivery & obj);
-    // op==
-    // Returns true if product names, quantities, and months are equal
-    // Defined in source
-    friend
-	bool operator==(const Delivery & lhs, const  Delivery & rhs);
-
-    
-    // op!=
-    // Returns false if product names, quantities or month are not same
-    // Defined in source
-    friend
-	bool operator!=(const Delivery & lhs, const Delivery & rhs);
 
 public:
     
@@ -145,5 +133,18 @@ private:
     int _month; // Calendar month (1-12)
 
 };
+
+// op==
+// Returns true if product names, quantities, and months are equal
+// Defined in source
+// friend
+bool operator==(const Delivery & lhs, const  Delivery & rhs);
+
+ 
+// op!=
+// Returns false if product names, quantities or month are not same
+// Defined in source
+//friend
+bool operator!=(const Delivery & lhs, const Delivery & rhs);
 
 #endif //#ifndef FILE_DELIVERY_H_INCLUDED
