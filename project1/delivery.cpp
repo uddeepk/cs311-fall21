@@ -110,7 +110,9 @@ std::string Delivery::toString() const
 
 // ****** Delivery: operator definitions ******
 
-// friend op==
+// global operators
+
+// op==
 bool operator==(const Delivery & lhs, const Delivery & rhs)
 {
     assert( lhs.getQuantity() >= 0 && 1 >= lhs.getMonth() && lhs.getMonth() <= 12);
@@ -119,7 +121,7 @@ bool operator==(const Delivery & lhs, const Delivery & rhs)
     return lhs.getProduct() == rhs.getProduct() && lhs.getQuantity() == rhs.getQuantity() && lhs.getMonth() == rhs.getMonth();
 }
 
-// friend op!=
+// op!=
 bool operator!=(const Delivery & lhs, const Delivery & rhs)
 {
        assert( lhs.getQuantity() >= 0 && 1 >= lhs.getMonth() && lhs.getMonth() <= 12);
@@ -135,4 +137,43 @@ std::ostream & operator<<(std::ostream & str,
       
     str << obj.toString();
     return str;
+}
+
+// ****Delivery : public operators
+
+// op++[pre]
+Delivery & Delivery::operator++()
+{
+      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+
+      ++_quantity;
+      return *this;
+}
+
+// op++[post]
+Delivery Delivery::operator++([[maybe_unused]] int dummy)
+{
+      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+
+      auto save = *this;
+      ++(*this);
+      return save;
+}
+
+// op--[pre]
+Delivery & Delivery::operator--()
+{
+      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+
+      if(_quantity > 0 ) --_quantity;
+      return *this;
+}
+
+Delivery Delivery::operator--([[maybe_unused]] int dummy)
+{
+      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+
+      auto save = *this;
+      --(*this);
+      return save;
 }
