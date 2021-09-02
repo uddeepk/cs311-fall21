@@ -10,8 +10,8 @@
 #include "delivery.h"
 // For class Delivery
 #include <vector>
-// For months in string
-#include <string>
+// For storing months in vector
+
 //*********************************************************************
 // class Delivery - Definitions of member functions
 // ********************************************************************
@@ -27,7 +27,7 @@ Delivery::Delivery()
 // 3-param ctor definition
 Delivery::Delivery(const std::string & product, int quantity, int month)
 {
-    assert( quantity >= 0 && 1 >= month && month <= 12);
+    assert( quantity >= 0 && 1 <= month && month <= 12);
 
     setProduct(product);
     setQuantity(quantity);
@@ -86,7 +86,8 @@ void Delivery::setQuantity(int quantity)
 // Set month to a given number
 void Delivery::setMonth(int month)
 {
-    assert(1 >= month && month <= 12);
+    assert(1 <= month && month <= 12);
+   
 
     _month = month;
 }
@@ -94,14 +95,14 @@ void Delivery::setMonth(int month)
 // Delivery::empty
 bool Delivery::empty() const
 {
-    assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+    assert( _quantity >= 0 && 1 <= _month && _month <= 12);
     return _quantity == 0;
 }
 
 // Delivery::toString
 std::string Delivery::toString() const
 {
-    assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+    assert( _quantity >= 0 && 1 <= _month && _month <= 12);
     std::vector <std::string> months {"Jan", "Feb", "Mar", "Apr", "May",
 	"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     std::string myStr = getProduct() + " ("+ std::to_string( getQuantity()) + "), " + months[getMonth()-1];
@@ -115,8 +116,8 @@ std::string Delivery::toString() const
 // op==
 bool operator==(const Delivery & lhs, const Delivery & rhs)
 {
-    assert( lhs.getQuantity() >= 0 && 1 >= lhs.getMonth() && lhs.getMonth() <= 12);
-    assert( rhs.getQuantity() >= 0 && 1 >= rhs.getMonth() && rhs.getMonth() <= 12);
+    assert( lhs.getQuantity() >= 0 && 1 <= lhs.getMonth() && lhs.getMonth() <= 12);
+    assert( rhs.getQuantity() >= 0 && 1 <= rhs.getMonth() && rhs.getMonth() <= 12);
 
     return lhs.getProduct() == rhs.getProduct() && lhs.getQuantity() == rhs.getQuantity() && lhs.getMonth() == rhs.getMonth();
 }
@@ -124,8 +125,8 @@ bool operator==(const Delivery & lhs, const Delivery & rhs)
 // op!=
 bool operator!=(const Delivery & lhs, const Delivery & rhs)
 {
-       assert( lhs.getQuantity() >= 0 && 1 >= lhs.getMonth() && lhs.getMonth() <= 12);
-    assert( rhs.getQuantity() >= 0 && 1 >= rhs.getMonth() && rhs.getMonth() <= 12);
+       assert( lhs.getQuantity() >= 0 && 1 <= lhs.getMonth() && lhs.getMonth() <= 12);
+    assert( rhs.getQuantity() >= 0 && 1 <= rhs.getMonth() && rhs.getMonth() <= 12);
     return !(lhs == rhs);
 }
 
@@ -133,7 +134,7 @@ bool operator!=(const Delivery & lhs, const Delivery & rhs)
 std::ostream & operator<<(std::ostream & str,
 			  const Delivery & obj)
 {
-      assert( obj.getQuantity() >= 0 && 1 >= obj.getMonth() && obj.getMonth() <= 12);
+      assert( obj.getQuantity() >= 0 && 1 <= obj.getMonth() && obj.getMonth() <= 12);
       
     str << obj.toString();
     return str;
@@ -144,7 +145,7 @@ std::ostream & operator<<(std::ostream & str,
 // op++[pre]
 Delivery & Delivery::operator++()
 {
-      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+      assert( _quantity >= 0 && 1 <= _month && _month <= 12);
 
       ++_quantity;
       return *this;
@@ -153,7 +154,7 @@ Delivery & Delivery::operator++()
 // op++[post]
 Delivery Delivery::operator++([[maybe_unused]] int dummy)
 {
-      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+      assert( _quantity >= 0 && 1 <= _month && _month <= 12);
 
       auto save = *this;
       ++(*this);
@@ -163,7 +164,7 @@ Delivery Delivery::operator++([[maybe_unused]] int dummy)
 // op--[pre]
 Delivery & Delivery::operator--()
 {
-      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+      assert( _quantity >= 0 && 1 <= _month && _month <= 12);
 
       if(_quantity > 0 ) --_quantity;
       return *this;
@@ -171,7 +172,7 @@ Delivery & Delivery::operator--()
 
 Delivery Delivery::operator--([[maybe_unused]] int dummy)
 {
-      assert( _quantity >= 0 && 1 >= _month && _month <= 12);
+      assert( _quantity >= 0 && 1 <= _month && _month <= 12);
 
       auto save = *this;
       --(*this);
