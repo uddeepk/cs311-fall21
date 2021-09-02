@@ -12,7 +12,7 @@
 
 #include <string>  // For std::string
 #include <ostream> // For std::ostream
-
+#include <cassert> // For assert
 // **********************************
 // class Delivery - Class definition
 // **********************************
@@ -28,16 +28,29 @@ class Delivery {
     // Prints string representation of data
     friend
 	std::ostream & operator<<(std::ostream & str, const Delivery & obj);
+    // op==
+    // Returns true if product names, quantities, and months are equal
+    // Defined in source
+    friend
+	bool operator==(const Delivery & lhs, const  Delivery & rhs);
+
+    
+    // op!=
+    // Returns false if product names, quantities or month are not same
+    // Defined in source
+    friend
+	bool operator!=(const Delivery & lhs, const Delivery & rhs);
+
 public:
     
     // Default ctor
     // Set string to "UNSPECIFIED"
-    Delivery() {}
+    // Defined in source
+    Delivery();
 
     // 3-parameter Ctor from product, quantity, and month
-    Delivery(const & std::string product,
-	     int quantity,
-	     int month) {}
+    // Defined in source
+    Delivery(const std::string & ,int ,int );
 
 
 // ***** Delivery: General public *****
@@ -50,6 +63,11 @@ public:
     // Function defined in source
     std::string getProduct() const;
 
+    // getName
+    // Return product name using getProduct
+    // Function
+    std::string getName() const;
+    
     // getQuantity
     // Returns the quantity of the product
     // Function defined in source
@@ -65,8 +83,13 @@ public:
     // setProduct
     // Set product to given name
     // Function defined in source
-    void setProduct(const & std::string);
+    void setProduct(const std::string & product);
 
+    // setName
+    // Set product to given name using setProduct
+    // Function defined in source
+    void setName(const std::string & profuct);
+    
     // setQuantity
     // Set Quantity to given number
     // Function defined in source
@@ -92,16 +115,6 @@ public:
     
 // ****** Delivery: General public operators ******
 public:
-
-    // op==
-    // Returns true if product names, quantities, and months are equal
-    // Defined in source
-    bool operator==(const  Delivery &rhs);
-
-    // op!=
-    // Returns false if product names, quantities or month are not same
-    // Defined in source
-    bool operator!=(const Delivery &rhs);
 
     // op++[pre]
     // Increment quantity by 1
@@ -131,6 +144,6 @@ private:
     int _quantity; // Quantity of the product
     int _month; // Calendar month (1-12)
 
-}
+};
 
-#end if //#ifndef FILE_DELIVERY_H_INCLUDED
+#endif //#ifndef FILE_DELIVERY_H_INCLUDED
