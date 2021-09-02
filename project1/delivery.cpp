@@ -8,10 +8,9 @@
 // Delivery: product, quantity of product, month
 // Based off of Dr. Glenn G. Chappell's timeofday.cpp.
 
-#include "delivery.h"
-// For class Delivery
-#include <vector>
-// For storing months in vector
+#include "delivery.h" // For class Delivery
+#include <vector> // For vector
+#include <cassert> // For assert
 
 //*********************************************************************
 // class Delivery - Definitions of member functions

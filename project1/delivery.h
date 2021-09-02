@@ -11,9 +11,8 @@
 #ifndef FILE_DELIVERY_H_INCLUDED
 #define FILE_DELIVERY_H_INCLUDED
 
-//#include <string>  // For std::string
 #include <ostream> // For std::ostream
-#include <cassert> // For assert
+
 // **********************************
 // class Delivery - Class definition
 // **********************************
