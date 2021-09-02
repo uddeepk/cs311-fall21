@@ -1,6 +1,6 @@
-#cs311-fall21
+# cs311-fall21
 
-Repo for CS 311: Data Structures and Algorithms, Fall 21, UAF
+## Repo for CS 311: Data Structures and Algorithms, Fall 21, UAF
 
 This repo contains code for my projects in CS 311.
 
