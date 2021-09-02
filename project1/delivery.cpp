@@ -1,11 +1,12 @@
 // delivery.cpp
 // Uddeep Karki
 // Started: 2021-09-01
-// Updated
+// Updated: 2021-09-02
 //
 // For CS 311 Fall 2021 - Project 1
 // Source for class Delivery
 // Delivery: product, quantity of product, month
+// Based off of Dr. Glenn G. Chappell's timeofday.cpp.
 
 #include "delivery.h"
 // For class Delivery
