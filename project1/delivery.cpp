@@ -33,7 +33,7 @@ Delivery::Delivery(const std::string & product, int quantity, int month)
     setQuantity(quantity);
     setMonth(month);
 }
-// Delivery::getProduct
+// Delivery::getName
 std::string Delivery::getName() const
 {
     assert(_quantity >= 0 && 1 <= _month && _month <= 12);
@@ -56,7 +56,7 @@ int Delivery::getMonth() const
     return _month;
 }
 
-// Delivery::setProduct
+// Delivery::setName
 void Delivery::setName(const std::string & product)
 {
     _product = product;
