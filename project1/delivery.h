@@ -46,14 +46,9 @@ public:
 
     // *** getters ***
 
-    // getProduct
+    // getName
     // Returns product
     // Function defined in source
-    std::string getProduct() const;
-
-    // getName
-    // Return product name using getProduct
-    // Function
     std::string getName() const;
     
     // getQuantity
@@ -68,16 +63,11 @@ public:
 
     // *** setters ***
 
-    // setProduct
+    // setName
     // Set product to given name
     // Function defined in source
-    void setProduct(const std::string & product);
+    void setName(const std::string & product);
 
-    // setName
-    // Set product to given name using setProduct
-    // Function defined in source
-    void setName(const std::string & profuct);
-    
     // setQuantity
     // Set Quantity to given number
     // Function defined in source
