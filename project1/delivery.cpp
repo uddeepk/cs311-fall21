@@ -19,7 +19,7 @@
 // Default ctor definition
 Delivery::Delivery()
 {
-    setProduct("UNSPECIFIED");
+    setName("UNSPECIFIED");
     setQuantity(0);
     setMonth(1);
 }
@@ -29,7 +29,7 @@ Delivery::Delivery(const std::string & product, int quantity, int month)
 {
     assert( quantity >= 0 && 1 <= month && month <= 12);
 
-    setProduct(product);
+    setName(product);
     setQuantity(quantity);
     setMonth(month);
 }
@@ -93,7 +93,7 @@ std::string Delivery::toString() const
     assert( _quantity >= 0 && 1 <= _month && _month <= 12);
     std::vector <std::string> months {"Jan", "Feb", "Mar", "Apr", "May",
 	"Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    std::string myStr = getProduct() + " ("+ std::to_string( getQuantity()) + "), " + months[getMonth()-1];
+    std::string myStr = getName() + " ("+ std::to_string( getQuantity()) + "), " + months[getMonth()-1];
     return myStr;
 }
 
@@ -107,7 +107,7 @@ bool operator==(const Delivery & lhs, const Delivery & rhs)
     assert( lhs.getQuantity() >= 0 && 1 <= lhs.getMonth() && lhs.getMonth() <= 12);
     assert( rhs.getQuantity() >= 0 && 1 <= rhs.getMonth() && rhs.getMonth() <= 12);
 
-    return lhs.getProduct() == rhs.getProduct() && lhs.getQuantity() == rhs.getQuantity() && lhs.getMonth() == rhs.getMonth();
+    return lhs.getName() == rhs.getName() && lhs.getQuantity() == rhs.getQuantity() && lhs.getMonth() == rhs.getMonth();
 }
 
 // op!=
