@@ -147,7 +147,7 @@ public:
 
 
     // size: no parameters
-    // Returns size of array
+    // Returns number of elements in SSArray
     size_type size() const
     {
 	return _size; // TODO: Or .size() ?
@@ -165,7 +165,7 @@ public:
     }
 
     // end: no parameters
-    // Returns the address of the 
+    // Returns the address 1 past the last element in SSArray
     value_type* end()
     {
 	return begin() + size();
@@ -178,8 +178,8 @@ public:
     
 // ***** SSArray: Data members *****
 private:
-    size_type _size;//=0 ;
-    value_type * _arrayptr;//=nullptr ; // TODO: see without nullptr
+    size_type _size;
+    value_type * _arrayptr;
   
 
 };
@@ -194,7 +194,7 @@ private:
 template <typename ValueType>
 bool operator == (const SSArray<ValueType>& lhs, const SSArray<ValueType> & rhs)
 {
-    return std::equal(std::begin(lhs), std::end(lhs), std::begin(rhs), std::end(rhs));
+    return std::equal(std::cbegin(lhs), std::cend(lhs), std::cbegin(rhs), std::cend(rhs));
 }
 
 // operator!=
@@ -216,8 +216,8 @@ bool operator!= (const SSArray<ValueType> & lhs, const SSArray <ValueType> & rhs
 template <typename ValueType>
 bool operator<( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 {
-    return std::lexicographical_compare(std::begin(lhs), std::end(lhs),
-					std::begin(rhs), std::end(rhs));
+    return std::lexicographical_compare(std::cbegin(lhs), std::cend(lhs),
+					std::cbegin(rhs), std::cend(rhs));
 }
 
 // operator >
