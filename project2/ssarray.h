@@ -1,7 +1,7 @@
 // ssarray.h
 // Uddeep Karki
 // Created: 2021-09-13
-// Updated:
+// Updated: 2021-09-14
 //
 // For CS 311 Fall 2021 Project 2
 // Header for template class SSArray
@@ -42,8 +42,8 @@ public:
     // Default Ctor
     // creates a SSArray of size 8
 SSArray()
-    :_arrayptr(new value_type[8]),
-	_size(8)
+    :_size(8),
+     _arrayptr(new value_type[8])
     {}
 
     // Dctor
@@ -55,23 +55,42 @@ SSArray()
     // Copy Ctor
     // TODO
     SSArray(const SSArray & other)
-    {}
+	:_size(other.size())
+	
+    {
+	_arrayptr=new value_type[_size];
+	std::copy(other.begin(), other.end(), begin());
+    }
 
     // Move Ctor
     // TODO
-    SSArray (SSArray && other)
-    {}
+    SSArray (SSArray && other) noexcept
+	:_size(0),
+	 _arrayptr(nullptr)
+    {
+	std::swap(_size, other._size);
+        std::swap(_arrayptr, other._arrayptr);
+    }
 
     // Copy Assignement
     // TODO
     SSArray & operator=(const SSArray & rhs)
-    {}
+    {
+	SSArray old(rhs);
+	std::swap(_size, old._size);
+	std::swap(_arrayptr, old._arrayptr);
+	return *this;
+    }
 
     
     // Move Assignement
     // TODO
-    SSArray & operator=(SSArray && rhs)
-    {}
+    SSArray & operator=(SSArray && rhs) noexcept
+    {
+	std::swap(_size, rhs._size);
+	std::swap(_arrayptr, rhs._arrayptr);
+	return *this;
+    }
     
 
     // 1-parameter Ctor
@@ -79,14 +98,16 @@ SSArray()
     // paramemter must be a non-negative integer
     // not an implicity type conversion
     explicit SSArray( size_type size)
-	:_arrayptr(new value_type[size])
+	:_size(size),
+	_arrayptr(new value_type[size])
     {}
 
     // 2- parameter Ctor
     // size, value
     // Creates SSArray of size size with every entry with value value
     SSArray(size_type size, const value_type &value)
-	:_size(size), _arrayptr(new value_type[size])
+	:_size(size),
+	 _arrayptr(new value_type[size])
     {
 	std::fill(begin(), end() ,value);
 	// TODO: Can i Use std::end here instead of +_size.
@@ -135,18 +156,18 @@ public:
     // Returns the address of the 
     value_type* end()
     {
-	return begin() + size();
+	return begin() + _size;
     }
     const value_type* end() const
     {
-	return begin() + size();
+	return begin() + _size;
     }
 
     
 // ***** SSArray: Data members *****
 private:
-    value_type * _arrayptr = nullptr; // TODO: see without nullptr
-    size_type _size ;
+    value_type * _arrayptr;//=nullptr ; // TODO: see without nullptr
+    size_type _size;//=0 ;
 
 };
 
@@ -169,7 +190,8 @@ bool operator!= (const SSArray<ValueType> & lhs, const SSArray <ValueType> & rhs
 template <typename ValueType>
 bool operator<( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 {
-    return false;
+    return std::lexicographical_compare(lhs.begin(), lhs.end(),
+                                     rhs.begin(), rhs.end());;
 }
 
 template <typename ValueType>
