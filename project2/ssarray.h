@@ -20,11 +20,16 @@
 //*********************************************************************
 
 // template class SSArray
+// A "Somewhat Smart Array Class"
 // template class holding dynamic array of client specified type.
 // Invariants:
 //     0 <= _size
+//     _arrayptr points to memory allocated with new[]: owner *this
 // Requirements on Types:
-//    TODO: Write requirements on types
+//    ValueType must have operator ==
+//    ValueType must have operator <
+//    ValueType must have default constructor
+//    ValueType must have copy assignment
 
 template <typename ValueType>
 class SSArray {
@@ -43,8 +48,10 @@ public:
     // creates a SSArray of size 8
 SSArray()
     :_size(8),
-     _arrayptr(new value_type[8])
+     _arrayptr(new value_type[_size])
     {}
+
+    // ***** Big Five - defined explicityly ***** //
 
     // Dctor
     ~SSArray()
@@ -53,17 +60,20 @@ SSArray()
     }
 
     // Copy Ctor
-    // TODO
+    // Pre:
+    //     A valid SSArray object
     SSArray(const SSArray & other)
-	:_size(other.size())
+	:_size(other.size()),
+	 _arrayptr(new value_type[_size])
 	
     {
-	_arrayptr=new value_type[_size];
-	std::copy(other.begin(), other.end(), begin());
+
+	std::copy(std::cbegin(other), std::cend(other), begin());
     }
 
     // Move Ctor
-    // TODO
+    // Pre:
+    //     A valid SSArray object
     SSArray (SSArray && other) noexcept
 	:_size(0),
 	 _arrayptr(nullptr)
@@ -73,7 +83,8 @@ SSArray()
     }
 
     // Copy Assignement
-    // TODO
+    // Pre:
+    //     A valid SSArray object
     SSArray & operator=(const SSArray & rhs)
     {
 	SSArray old(rhs);
@@ -84,7 +95,8 @@ SSArray()
 
     
     // Move Assignement
-    // TODO
+    // Pre:
+    //     A valid SSArray object
     SSArray & operator=(SSArray && rhs) noexcept
     {
 	std::swap(_size, rhs._size);
@@ -93,24 +105,29 @@ SSArray()
     }
     
 
+    // ***** Parameter Ctors *****//
+    
     // 1-parameter Ctor
     // Ctor from size
-    // paramemter must be a non-negative integer
     // not an implicity type conversion
+    // Pre:
+    //     size >= 0
     explicit SSArray( size_type size)
 	:_size(size),
-	_arrayptr(new value_type[size])
+	_arrayptr(new value_type[_size])
     {}
 
     // 2- parameter Ctor
-    // size, value
+    // 1st parameter size is number of items in array
+    // 2nd parameter value provides the entry values
     // Creates SSArray of size size with every entry with value value
+    // Pre:
+    //     size >= 0
     SSArray(size_type size, const value_type &value)
 	:_size(size),
-	 _arrayptr(new value_type[size])
+	 _arrayptr(new value_type[_size])
     {
-	std::fill(begin(), end() ,value);
-	// TODO: Can i Use std::end here instead of +_size.
+	std::fill(begin(), end() , value);
     }
 
 // ***** SSArray: General public members *****
@@ -118,18 +135,14 @@ public:
 
     // Bracket operators-[]
     // Returns a reference to the index item
-    // Pre: 0 <= index <= _size-1
-    // Post: [index] = _arrayptr[index]
+    // Pre:
+    //     0 <= index < _size
     value_type & operator[] (size_type index)
     {
-	//assert(0 <= index && index <= _size-1);
 	return _arrayptr[index];
     }
-
-    // const version
     const value_type & operator[] (size_type index) const
     {
-	//assert(0 <= index && index <= _size-1);
 	return _arrayptr[index];
     }
 
@@ -156,58 +169,79 @@ public:
     // Returns the address of the 
     value_type* end()
     {
-	return begin() + _size;
+	return begin() + size();
     }
     const value_type* end() const
     {
-	return begin() + _size;
+	return begin() + size();
     }
 
     
 // ***** SSArray: Data members *****
 private:
-    value_type * _arrayptr;//=nullptr ; // TODO: see without nullptr
     size_type _size;//=0 ;
+    value_type * _arrayptr;//=nullptr ; // TODO: see without nullptr
+  
 
 };
 
+// ***** Global Functions*****//
+
+// Global operator overloads: operators ==, !=, <, >=, >, <= //
+
+// operator==
 // Returns true if every element of each SSArray are equal
-// and both are same size
+// Pre: operator == must be defined for value_type
 template <typename ValueType>
 bool operator == (const SSArray<ValueType>& lhs, const SSArray<ValueType> & rhs)
 {
-    return std::equal(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    return std::equal(std::begin(lhs), std::end(lhs), std::begin(rhs), std::end(rhs));
 }
 
+// operator!=
+// Returns true if the two SSArrays differ in any way
+// Pre: operator == must be defined for ValueType
 template <typename ValueType>
 bool operator!= (const SSArray<ValueType> & lhs, const SSArray <ValueType> & rhs)
 {
     return !(lhs == rhs);
 }
 
-// Comparison operators
-// From https://en.cppreference.com/w/cpp/language/operators
+// Comparison operators <, >=, >, <=
+// Based off of the page https://en.cppreference.com/w/cpp/language/operators
+// 
+
+// operator <
+// returns true, if for all i, lhs[i] < rhs[i]
+// Pre: operator < defined for ValueType
 template <typename ValueType>
 bool operator<( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 {
-    return std::lexicographical_compare(lhs.begin(), lhs.end(),
-                                     rhs.begin(), rhs.end());;
+    return std::lexicographical_compare(std::begin(lhs), std::end(lhs),
+					std::begin(rhs), std::end(rhs));
 }
 
+// operator >
+// returns true if for all i , lhs[i] > rhs[i]
+// Pre: operator < defined for ValueType
 template <typename ValueType>
 bool operator>( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 {
     return rhs < lhs;
 }
 
-
+// operator <=
+// returns true if for all i, lhs[i] <= rhs [i]
+// Pre: operator < defined for ValueType
 template <typename ValueType>
 bool operator<=( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 {
     return !(lhs > rhs);
 }
 
-
+// operator >=
+// returns true if for all i , lhs[i] >= rhs[i]
+// Pre: operator < defined for ValueType
 template <typename ValueType>
 bool operator>=( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 {
