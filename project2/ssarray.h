@@ -12,8 +12,10 @@
 #define FILE_SSARRAY_H_INCLUDED
 
 #include <cstddef> // For std::size_t
-#include <algorithm> // For std::fill, std::equal, std::lexicographical_compare, std::swap
+#include <algorithm> // For std::fill, std::equal, 
+// std::lexicographical_compare, std::swap
 #include <iterator> // For std::begin, std::end, std::cbegin, std::cend
+#include <cassert> // For assert
 //*********************************************************************
 // template class SSArray - template class definition
 //*********************************************************************
@@ -66,7 +68,7 @@ SSArray()
 	 _arrayptr(new value_type[_size])
 	
     {
-
+        
 	std::copy(std::cbegin(other), std::cend(other), begin());
     }
 
@@ -77,8 +79,7 @@ SSArray()
 	:_size(0),
 	 _arrayptr(nullptr)
     {
-	std::swap(_size, other._size);
-        std::swap(_arrayptr, other._arrayptr);
+	mswap(other);
     }
 
     // Copy Assignement
@@ -86,9 +87,10 @@ SSArray()
     //     A valid SSArray object
     SSArray & operator=(const SSArray & rhs)
     {
-	SSArray old(rhs);
-	std::swap(_size, old._size);
-	std::swap(_arrayptr, old._arrayptr);
+    	if ( &rhs != this) {
+	    SSArray copy_of_rhs(rhs);
+	    mswap(copy_of_rhs);
+	}
 	return *this;
     }
 
@@ -98,8 +100,10 @@ SSArray()
     //     A valid SSArray object
     SSArray & operator=(SSArray && rhs) noexcept
     {
-	std::swap(_size, rhs._size);
-	std::swap(_arrayptr, rhs._arrayptr);
+        if(&rhs != this)
+        {
+	    mswap(rhs);
+	}
 	return *this;
     }
     
@@ -138,23 +142,27 @@ public:
     //     0 <= index < _size
     value_type & operator[] (size_type index)
     {
+	assert(index < _size);
 	return _arrayptr[index];
     }
     const value_type & operator[] (size_type index) const
     {
+	assert(index < _size);
 	return _arrayptr[index];
     }
 
 
     // size: no parameters
     // Returns number of elements in SSArray
+    // Pre: none
     size_type size() const
     {
-	return _size; // TODO: Or .size() ?
+	return _size; 
     }
 
     // begin: no parameters
     // Returns the address of the item 0 in the array
+    // Pre: none
     value_type* begin()
     {
 	return _arrayptr;
@@ -175,12 +183,25 @@ public:
 	return begin() + size();
     }
 
+
+// ***** Helper functions *****
+
+private:
+    // mswap: SSArray & other
+    // swaps the _sizes and the _arrayptrs
+    void mswap(SSArray & other) noexcept
+    {
+    	std::swap(_size, other._size);
+    	std::swap(_arrayptr, other._arrayptr);
+    }
     
 // ***** SSArray: Data members *****
 private:
-    size_type _size;
-    value_type * _arrayptr;
+    size_type _size; // number of items in the SSArray
+    value_type * _arrayptr; // pointer to the first item in the SSArray
   
+  
+
 
 };
 
@@ -192,16 +213,19 @@ private:
 // Returns true if every element of each SSArray are equal
 // Pre: operator == must be defined for value_type
 template <typename ValueType>
-bool operator == (const SSArray<ValueType>& lhs, const SSArray<ValueType> & rhs)
+bool operator == (const SSArray<ValueType>& lhs,
+                  const SSArray<ValueType> & rhs)
 {
-    return std::equal(std::cbegin(lhs), std::cend(lhs), std::cbegin(rhs), std::cend(rhs));
+    return std::equal(std::cbegin(lhs), std::cend(lhs),
+                      std::cbegin(rhs), std::cend(rhs));
 }
 
 // operator!=
 // Returns true if the two SSArrays differ in any way
 // Pre: operator == must be defined for ValueType
 template <typename ValueType>
-bool operator!= (const SSArray<ValueType> & lhs, const SSArray <ValueType> & rhs)
+bool operator!= (const SSArray<ValueType> & lhs,
+                 const SSArray <ValueType> & rhs)
 {
     return !(lhs == rhs);
 }
@@ -214,7 +238,8 @@ bool operator!= (const SSArray<ValueType> & lhs, const SSArray <ValueType> & rhs
 // returns true, if for all i, lhs[i] < rhs[i]
 // Pre: operator < defined for ValueType
 template <typename ValueType>
-bool operator<( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
+bool operator<( const SSArray<ValueType> & lhs,
+                const SSArray<ValueType> & rhs)
 {
     return std::lexicographical_compare(std::cbegin(lhs), std::cend(lhs),
 					std::cbegin(rhs), std::cend(rhs));
@@ -224,7 +249,8 @@ bool operator<( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 // returns true if for all i , lhs[i] > rhs[i]
 // Pre: operator < defined for ValueType
 template <typename ValueType>
-bool operator>( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
+bool operator>( const SSArray<ValueType> & lhs,
+                const SSArray<ValueType> & rhs)
 {
     return rhs < lhs;
 }
@@ -233,7 +259,8 @@ bool operator>( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 // returns true if for all i, lhs[i] <= rhs [i]
 // Pre: operator < defined for ValueType
 template <typename ValueType>
-bool operator<=( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
+bool operator<=( const SSArray<ValueType> & lhs,
+                 const SSArray<ValueType> & rhs)
 {
     return !(lhs > rhs);
 }
@@ -242,7 +269,8 @@ bool operator<=( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
 // returns true if for all i , lhs[i] >= rhs[i]
 // Pre: operator < defined for ValueType
 template <typename ValueType>
-bool operator>=( const SSArray<ValueType> & lhs, const SSArray<ValueType> & rhs)
+bool operator>=( const SSArray<ValueType> & lhs,
+                 const SSArray<ValueType> & rhs)
 {
     return !(lhs < rhs);
 }
