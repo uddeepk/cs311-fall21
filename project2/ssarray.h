@@ -12,8 +12,8 @@
 #define FILE_SSARRAY_H_INCLUDED
 
 #include <cstddef> // For std::size_t
-#include <algorithm> // For std::fill, std::equal, std::lexicographical_compare
-#include <iterator> // For std::begin, std::end
+#include <algorithm> // For std::fill, std::equal, std::lexicographical_compare, std::swap
+#include <iterator> // For std::begin, std::end, std::cbegin, std::cend
 //*********************************************************************
 // template class SSArray - template class definition
 //*********************************************************************
