@@ -8,6 +8,8 @@
 // Template class holding array of client specified type.
 // There is no associated source file.
 
+// This code is based off Dr. Glenn G Chappell's slides and samples.
+
 #ifndef FILE_SSARRAY_H_INCLUDED
 #define FILE_SSARRAY_H_INCLUDED
 
@@ -189,6 +191,7 @@ public:
 private:
     // mswap: SSArray & other
     // swaps the _sizes and the _arrayptrs
+    // Pre: valid SSArray object
     void mswap(SSArray & other) noexcept
     {
     	std::swap(_size, other._size);
