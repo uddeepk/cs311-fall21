@@ -14,7 +14,8 @@
 #include <cstddef>     // For std::size_t
 #include <functional>  // For std::function
 #include <stdexcept>   // For std::out_of_range
-
+#include <algorithm>   // For std::unique, std::sort
+#include <iterator>    // For std::distance
 // lookup
 // Lookup the value at index in the Linked List
 // Pre:
@@ -49,13 +50,21 @@ ValueType lookup(const LLNode<ValueType> * head,
 void didItThrow(const std::function<void()> & ff,
                 bool & threw);
 
-
+// uniqueCount
+// Returns the count of unique items in container
+// Pre:
+//     RAIter first, and last belong to the same container
+// Requirements on Typesr:
+//     RAIter must meet requirements of LegacyForwardIterators
+//     The dereference type needs a operator==, and move assignment
+//     
 template <typename RAIter>
 std::size_t uniqueCount(RAIter first,
                         RAIter last)
 {
-    return std::size_t(42);  // Dummy return
-    // TODO: WRITE THIS!!!
+    std::sort(first, last);
+    auto uniqueLast = std::unique(first,last);
+    return std::distance(first,uniqueLast);
 }
 
 
