@@ -10,7 +10,7 @@
 
 #include <functional>
 using std::function;
-
+#include <cassert>     // For assert
 
 // didItThrow
 // Takes a reference to a function and reference bool value
@@ -18,7 +18,8 @@ using std::function;
 // Sets bool value to if function threw an exception or not
 // Pre:
 //     ff is a function
-//     threw is valid bool
+//     threw is bool
+// All exceptions are caught and rethrown
 void didItThrow(const function<void()> & ff,
                 bool & threw)
 {
@@ -37,11 +38,13 @@ void didItThrow(const function<void()> & ff,
 // takes two integers
 // recursively computes gcd or integers and returns it
 // Pre:
-// TODO: Write comments
-//     
+//     a, b >= 0 && !(a == 0 && b == 0)
+// No requirements on types
+// No exceptions thrown
 int gcd(int a,
         int b)
 {
+    assert(a >= 0 && b >= 0) && !(a == 0 && b == 0);
     // Base Case:
     if (a == 0)
 	return b;

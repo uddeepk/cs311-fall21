@@ -16,6 +16,7 @@
 #include <stdexcept>   // For std::out_of_range
 #include <algorithm>   // For std::unique, std::sort
 #include <iterator>    // For std::distance
+
 // lookup
 // Lookup the value at index in the Linked List
 // Pre:
@@ -57,7 +58,7 @@ void didItThrow(const std::function<void()> & ff,
 // Requirements on Typesr:
 //     RAIter must meet requirements of LegacyForwardIterators
 //     The dereference type needs a operator==, and move assignment
-//     
+//     Exceptions none
 template <typename RAIter>
 std::size_t uniqueCount(RAIter first,
                         RAIter last)
