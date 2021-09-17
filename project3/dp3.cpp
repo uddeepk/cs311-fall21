@@ -1,6 +1,7 @@
-// dp3.cpp  SKELETON
-// Glenn G. Chappell
-// 2021-09-16
+// dp3.cpp
+// Uddeep Karki
+// 2021-09-17
+// Based off dp3.cpp  SKELETON by Dr. Glenn G. Chappell on 2021-09-16
 //
 // For CS 311 Fall 2021
 // Source for Project 3 functions
@@ -11,10 +12,25 @@
 using std::function;
 
 
+// didItThrow
+// Takes a reference to a function and reference bool value
+// Calls ff
+// Sets bool value to if function threw an exception or not
+// Pre:
+//     ff is a function
+//     threw is valid bool
 void didItThrow(const function<void()> & ff,
                 bool & threw)
 {
-    // TODO: WRITE THIS!!!
+    // TODO: Write proper comments
+    threw = false;
+    try {
+	ff();
+    }
+    catch (...) {
+	threw = true;
+	throw;
+    }
 }
 
 

@@ -1,9 +1,11 @@
-// dp3.h  SKELETON
-// Glenn G. Chappell
-// 2021-09-16
-//
+// dp3.h
+// Uddeep Karki
+// 2021-09-17
 // For CS 311 Fall 2021
 // Header for Project 3 functions
+
+// Based off dp3.h  SKELETON by Dr. Glenn G. Chappell created on 2021-09-16
+
 
 #ifndef FILE_DP3_H_INCLUDED
 #define FILE_DP3_H_INCLUDED
@@ -11,14 +13,35 @@
 #include "llnode.h"    // For LLNode
 #include <cstddef>     // For std::size_t
 #include <functional>  // For std::function
+#include <stdexcept>   // For std::out_of_range
 
-
+// lookup
+// Lookup the value at index in the Linked List
+// Pre:
+//     head is ptr to nullptr-terminated Linked List, or nullptr for
+//      empty Linked List.
+// Requirements on Types:
+//     ValueType must have a copy ctor and a (non-throwing) dctor.
+// NOTE: The above are the requirements for LLNoce<ValueType>; no
+// member function of ValueType are actually used here.
 template <typename ValueType>
 ValueType lookup(const LLNode<ValueType> * head,
                  std::size_t index)
 {
-    return ValueType();  // Dummy return
-    // TODO: WRITE THIS!!!
+    // TODO: Polish Comments
+    auto p = head;                  // Iterates through list
+    std::size_t currentIndex = 0 ;  // current Index in list
+
+    while( p ) {
+	if ( currentIndex == index)
+	    return p->_data;
+	
+	p = p->_next;
+	++currentIndex;
+    }
+    // At this point index >= size
+    throw std::out_of_range("Out of range");
+    
 }
 
 
