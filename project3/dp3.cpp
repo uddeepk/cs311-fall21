@@ -33,11 +33,22 @@ void didItThrow(const function<void()> & ff,
     }
 }
 
-
+// gcd
+// takes two integers
+// recursively computes gcd or integers and returns it
+// Pre:
+//     
 int gcd(int a,
         int b)
 {
-    return 42;  // Dummy return
+    // return 42;  // Dummy return
     // TODO: WRITE THIS!!!
+
+    // Base Case:
+    if (a == 0)
+	return b;
+
+    // Recursive Case:
+    return gcd(b % a, a);
 }
 
