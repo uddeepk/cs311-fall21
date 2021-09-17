@@ -37,13 +37,11 @@ void didItThrow(const function<void()> & ff,
 // takes two integers
 // recursively computes gcd or integers and returns it
 // Pre:
+// TODO: Write comments
 //     
 int gcd(int a,
         int b)
 {
-    // return 42;  // Dummy return
-    // TODO: WRITE THIS!!!
-
     // Base Case:
     if (a == 0)
 	return b;
