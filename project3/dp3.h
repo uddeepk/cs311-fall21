@@ -32,7 +32,7 @@ template <typename ValueType>
 ValueType lookup(const LLNode<ValueType> * head,
                  std::size_t index)
 {
-    // TODO: Polish Comments
+   
     auto p = head;                  // Iterates through list
     std::size_t currentIndex = 0 ;  // current Index in list
 
@@ -57,7 +57,7 @@ void didItThrow(const std::function<void()> & ff,
 // Returns the count of unique items in container
 // Pre:
 //     RAIter first, and last belong to the same container
-// Requirements on Typesr:
+// Requirements on Types:
 //     for std::sort, RAIter must meet requirements of 
 //      ValueSwappable and LegacyRandomAccessIterators
 //     RAIter must meet requirements of LegacyForwardIterators

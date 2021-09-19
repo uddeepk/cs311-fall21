@@ -23,7 +23,6 @@ using std::function;
 void didItThrow(const function<void()> & ff,
                 bool & threw)
 {
-    // TODO: Write proper comments
     threw = false;
     try {
 	ff();
