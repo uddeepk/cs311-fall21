@@ -1,10 +1,10 @@
 // dp3.cpp
 // Uddeep Karki
-// 2021-09-17
-// Based off dp3.cpp  SKELETON by Dr. Glenn G. Chappell on 2021-09-16
-//
+// Updated: 2021-09-18
 // For CS 311 Fall 2021
 // Source for Project 3 functions
+// Based off dp3.cpp  SKELETON by Dr. Glenn G. Chappell on 2021-09-16
+
 
 #include "dp3.h"       // For Project 3 prototypes & templates
 
