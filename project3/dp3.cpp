@@ -13,9 +13,9 @@ using std::function;
 #include <cassert>     // For assert
 
 // didItThrow
-// Takes a reference to a function and reference bool value
-// Calls ff
-// Sets bool value to if function threw an exception or not
+// Takes a reference to a function and reference to a bool value
+//  Calls the function and if function throws an exception then
+//  sets bool to true and rethrows expection
 // Pre:
 //     ff is a function
 //     threw is bool
@@ -38,13 +38,14 @@ void didItThrow(const function<void()> & ff,
 // takes two integers
 // recursively computes gcd or integers and returns it
 // Pre:
+//     a, b are int such that
 //     a, b >= 0 && !(a == 0 && b == 0)
 // No requirements on types
 // No exceptions thrown
 int gcd(int a,
         int b)
 {
-    assert(a >= 0 && b >= 0) && !(a == 0 && b == 0);
+    assert((a >= 0 && b >= 0) && !(a == 0 && b == 0));
     // Base Case:
     if (a == 0)
 	return b;

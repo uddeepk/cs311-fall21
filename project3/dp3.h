@@ -26,6 +26,8 @@
 //     ValueType must have a copy ctor and a (non-throwing) dctor.
 // NOTE: The above are the requirements for LLNoce<ValueType>; no
 // member function of ValueType are actually used here.
+// Exections: 
+//     throws out_of_range when index >= size of linked list
 template <typename ValueType>
 ValueType lookup(const LLNode<ValueType> * head,
                  std::size_t index)
@@ -56,8 +58,11 @@ void didItThrow(const std::function<void()> & ff,
 // Pre:
 //     RAIter first, and last belong to the same container
 // Requirements on Typesr:
+//     for std::sort, RAIter must meet requirements of 
+//      ValueSwappable and LegacyRandomAccessIterators
 //     RAIter must meet requirements of LegacyForwardIterators
-//     The dereference type needs a operator==, and move assignment
+//     The dereferenced type or RAIter needs operator<, operator==, and move assignment
+//      move constructor
 //     Exceptions none
 template <typename RAIter>
 std::size_t uniqueCount(RAIter first,
