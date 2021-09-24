@@ -14,6 +14,20 @@ using std::vector;
 
 using MyBoardType = vector<vector<int>>;
 
+
+void placeDomino (MyBoardType &board,
+                  int dim_x, int dim_y,
+                  int x1, int y1,
+                  int x2, int y2,
+                  int &squaresLeft)
+{
+    assert(0 <= x1 && x1 < dim_x && 0 <= y1 && y1 < dim_y);
+    assert(0 <= x2 && x2 < dim_x && 0 <= y2 && y2 < dim_y);
+    assert(squaresLeft > 1);
+    ++board[x1][y1];
+    ++board[x2][y2];
+    squaresLeft -= 2;                
+}
 // checkDomino
 // Given partial solution to the "holey domino tilings" problem,
 // dimensions of the board, and proposed new tile placement is
@@ -49,8 +63,8 @@ int hdtCount_recurse(MyBoardType board,
 		     int dim_x, int dim_y,
 		     int squaresLeft)
 {
-    assert(board.size() == dim_y &&
-	   board[0].size() == dim_x &&
+    assert(board.size() == dim_x &&
+	   board[0].size() == dim_y &&
 	   0 <= squaresLeft <= dim_x * dim_y);
     
     if (squaresLeft == 0)
@@ -108,10 +122,13 @@ int hdtCount(int dim_x, int dim_y,
     // Initialize board
     // MyBoardType board(dim_x, (dim_y, 0));
     MyBoardType board (dim_x, vector<int>(dim_y, 0));
+    int squaresLeft = dim_x * dim_y;
     
     // Setting the forbidden squares
-    ++board[forbid1_x][forbid1_y];
-    ++board[forbid2_x][forbid2_y];
+    placeDomino(board, dim_x, dim_y,  
+                forbid1_x, forbid1_y,
+	        forbid2_x, forbid2_y,
+	        squaresLeft);
     
-    return hdtCount_recurse(board, dim_x, dim_y, dim_x * dim_y);
+    return hdtCount_recurse(board, dim_x, dim_y, squaresLeft);
 }
